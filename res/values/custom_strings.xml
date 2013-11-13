@@ -99,4 +99,14 @@
     <!-- Text shown for title of settings checkbox to maximize widgets [CHAR LIMIT=20] -->
     <string name="maximize_widgets_title">Maximize lockscreen widgets</string>
 
+    <!--Volume rocker category-->
+    <string name="volume_rocker_category">Volume rocker</string>
+    <!--Volume rocker wake-->
+    <string name="volume_wake_screen_title">Volume rocker wake</string>
+    <string name="volume_wake_screen_summary">Pressing the volume rocker will wake your Nexus</string>
+    <!--Volume rocker music control-->
+    <string name="volume_music_controls_title">Volume rocker music controls</string>
+    <string name="volume_music_controls_summary">When screen off, long-pressing the volume rocker will seek music tracks</string>
+
+
 </resources>
