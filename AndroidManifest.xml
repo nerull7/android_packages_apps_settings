@@ -1661,6 +1661,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".cyanogenmod.PowerMenu" />
+
         <activity android:name=".SmsDefaultDialog"
                   android:label="@string/sms_application_title"
                   android:excludeFromRecents="true"
