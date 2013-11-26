@@ -29,11 +29,13 @@ public class PowerMenu extends SettingsPreferenceFragment {
     private static final String TAG = "PowerMenu";
 
     private static final String KEY_REBOOT = "power_menu_reboot";
+    private static final String KEY_ADVANCED_REBOOT = "advanced_reboot";
     private static final String KEY_SCREENSHOT = "power_menu_screenshot";
     private static final String KEY_AIRPLANE = "power_menu_airplane";
     private static final String KEY_SILENT = "power_menu_silent";
 
     private CheckBoxPreference mRebootPref;
+    private CheckBoxPreference mAdvancedReboot;
     private CheckBoxPreference mScreenshotPref;
     private CheckBoxPreference mAirplanePref;
     private CheckBoxPreference mSilentPref;
@@ -47,6 +49,10 @@ public class PowerMenu extends SettingsPreferenceFragment {
         mRebootPref = (CheckBoxPreference) findPreference(KEY_REBOOT);
         mRebootPref.setChecked((Settings.System.getInt(getContentResolver(),
                 Settings.System.POWER_MENU_REBOOT_ENABLED, 1) == 1));
+
+        mAdvancedReboot = (CheckBoxPreference) findPreference(KEY_ADVANCED_REBOOT);
+        mAdvancedReboot.setChecked((Settings.Secure.getInt(getContentResolver(),
+                Settings.Secure.ADVANCED_REBOOT, 0) != 0));
 
         mScreenshotPref = (CheckBoxPreference) findPreference(KEY_SCREENSHOT);
         mScreenshotPref.setChecked((Settings.System.getInt(getContentResolver(),
@@ -76,17 +82,23 @@ public class PowerMenu extends SettingsPreferenceFragment {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_MENU_REBOOT_ENABLED,
                     value ? 1 : 0);
-       } else if (preference == mAirplanePref) {
+        } else if (preference == mAirplanePref) {
             value = mAirplanePref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_MENU_AIRPLANE_ENABLED,
                     value ? 1 : 0);
-       } else if (preference == mSilentPref) {
+        } else if (preference == mSilentPref) {
             value = mSilentPref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_MENU_SILENT_ENABLED,
                     value ? 1 : 0);
-        } else {
+        } else if (preference == mAdvancedReboot) {
+            value = mAdvancedReboot.isChecked();
+            Settings.Secure.putInt(getContentResolver(),
+                    Settings.Secure.ADVANCED_REBOOT,
+                    value ? 1 : 0);
+        }
+        else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
 
