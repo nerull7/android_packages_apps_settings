@@ -37,4 +37,7 @@
     <!-- App Ops -->
     <string name="appops_settings_title">AppOps</string>
 
+    <!-- Security & location settings screen, setting check box title. This controls whether to sync encryption password with lock screen token [CHAR LIMIT=28]-->
+    <string name="lockpattern_settings_enable_sync_enc_pass">Sync encryption password</string>
+
 </resources>
