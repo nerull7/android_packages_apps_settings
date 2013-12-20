@@ -116,6 +116,12 @@
                 android:title="@string/build_number"
                 android:summary="@string/device_info_default"/>
 
+        <!-- Source Code -->
+        <Preference android:key="source_code"
+                style="?android:preferenceInformationStyle"
+                android:title="@string/source_code"
+                android:summary="@string/source_code_url"/>
+
         <!-- SELinux status information -->
         <Preference android:key="selinux_status"
                 style="?android:preferenceInformationStyle"
