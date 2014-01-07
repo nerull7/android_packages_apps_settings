@@ -18,4 +18,8 @@
     <!-- App Ops -->
     <string name="appops_settings_title">AppOps</string>
 
+    <!-- Disable installed apps -->
+    <string name="app_not_so_special_disable_dlg_title">Disable installed app?</string>
+    <string name="app_not_so_special_disable_dlg_text">If you disable app, you will not be able to open it without enabling it back. Your data will not be deleted.</string>
+
 </resources>
