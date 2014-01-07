@@ -182,6 +182,7 @@ public class InstalledAppDetails extends Fragment
     private static final int DLG_DISABLE = DLG_BASE + 7;
     private static final int DLG_DISABLE_NOTIFICATIONS = DLG_BASE + 8;
     private static final int DLG_SPECIAL_DISABLE = DLG_BASE + 9;
+    private static final int DLG_NOT_SO_SPECIAL_DISABLE = DLG_BASE + 10;
 
     // Menu identifiers
     public static final int UNINSTALL_ALL_USERS_MENU = 1;
@@ -365,6 +366,14 @@ public class InstalledAppDetails extends Fragment
             } else {
                 mUninstallButton.setText(R.string.uninstall_text);
             }
+            // Froze all the apps
+            if (mAppEntry.info.enabled){
+                mSpecialDisableButton.setText(R.string.disable_text);
+            } else {
+                mSpecialDisableButton.setText(R.string.enable_text);
+            }
+            mSpecialDisableButton.setOnClickListener(this);
+            mMoreControlButtons.setVisibility(enabled ? View.VISIBLE : View.GONE);
         }
         // If this is a device admin, it can't be uninstall or disabled.
         // We do this here so the text of the button is still set correctly.
@@ -1213,6 +1222,23 @@ public class InstalledAppDetails extends Fragment
                     })
                     .setNegativeButton(R.string.dlg_cancel, null)
                     .create();
+                case DLG_NOT_SO_SPECIAL_DISABLE:
+                    return new AlertDialog.Builder(getActivity())
+                    .setTitle(getActivity().getText(R.string.app_not_so_special_disable_dlg_title))
+                    .setIconAttribute(android.R.attr.alertDialogIcon)
+                    .setMessage(getActivity().getText(R.string.app_not_so_special_disable_dlg_text))
+                    .setPositiveButton(R.string.dlg_ok,
+                            new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Disable the app
+                            new DisableChanger(getOwner(), getOwner().mAppEntry.info,
+                                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER)
+                            .execute((Object)null);
+                        }
+                    })
+                    .setNegativeButton(R.string.dlg_cancel, null)
+                    .create();
+
             }
             throw new IllegalArgumentException("unknown id " + id);
         }
@@ -1338,7 +1364,17 @@ public class InstalledAppDetails extends Fragment
                 }
             }
         } else if(v == mSpecialDisableButton) {
-            showDialogInner(DLG_SPECIAL_DISABLE, 0);
+            if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                showDialogInner(DLG_SPECIAL_DISABLE, 0);
+            } else {
+                if (mAppEntry.info.enabled){
+                    showDialogInner(DLG_NOT_SO_SPECIAL_DISABLE, 0);
+                } else {
+                    new DisableChanger(this, mAppEntry.info,
+                            PackageManager.COMPONENT_ENABLED_STATE_DEFAULT)
+                    .execute((Object)null);
+                }
+            }
         } else if(v == mActivitiesButton) {
             mPm.clearPackagePreferredActivities(packageName);
             try {
