@@ -87,7 +87,6 @@ public class SecuritySettings extends RestrictedSettingsFragment
 
     // Additional setting
     private static final String LOCK_NUMPAD_RANDOM = "lock_numpad_random";
-    private static final String LOCK_SYNC_ENCRYPTION_PASSWORD = "lock_sync_encryption_password";
     private static final String BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE = "block_device_admin_password_change";
 
     private PackageManager mPM;
@@ -576,8 +575,6 @@ public class SecuritySettings extends RestrictedSettingsFragment
             lockPatternUtils.setPowerButtonInstantlyLocks(isToggled(preference));
         } else if (KEY_ENABLE_WIDGETS.equals(key)) {
             lockPatternUtils.setWidgetsEnabled(mEnableKeyguardWidgets.isChecked());
-        } else if (LOCK_SYNC_ENCRYPTION_PASSWORD.equals(key)){
-            lockPatternUtils.setSyncEncryptionPassword(isToggled(preference));
         } else if (BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE.equals(key)){
             Settings.Secure.putInt(getContentResolver(), Settings.Secure.BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE,
                     isToggled(preference) ? 1 : 0 );
