@@ -356,24 +356,22 @@ public class InstalledAppDetails extends Fragment
             mMoreControlButtons.setVisibility(View.GONE);
             if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
                 enabled = handleDisableable(mUninstallButton);
-            } else if ((mPackageInfo.applicationInfo.flags
-                    & ApplicationInfo.FLAG_INSTALLED) == 0
-                    && mUserManager.getUsers().size() >= 2) {
-                // When we have multiple users, there is a separate menu
-                // to uninstall for all users.
-                mUninstallButton.setText(R.string.uninstall_text);
-                enabled = false;
             } else {
-                mUninstallButton.setText(R.string.uninstall_text);
+                if ((mPackageInfo.applicationInfo.flags
+                        & ApplicationInfo.FLAG_INSTALLED) == 0
+                        && mUserManager.getUsers().size() >= 2) {
+                    // When we have multiple users, there is a separate menu
+                    // to uninstall for all users.
+                    mUninstallButton.setText(R.string.uninstall_text);
+                    enabled = false;
+                } else {
+                    mUninstallButton.setText(R.string.uninstall_text);
+                }
+                // Froze all the apps
+                mSpecialDisableButton.setText(mAppEntry.info.enabled ? R.string.disable_text : R.string.enable_text);
+                mSpecialDisableButton.setOnClickListener(this);
+                mMoreControlButtons.setVisibility(enabled ? View.VISIBLE : View.GONE);
             }
-            // Froze all the apps
-            if (mAppEntry.info.enabled){
-                mSpecialDisableButton.setText(R.string.disable_text);
-            } else {
-                mSpecialDisableButton.setText(R.string.enable_text);
-            }
-            mSpecialDisableButton.setOnClickListener(this);
-            mMoreControlButtons.setVisibility(enabled ? View.VISIBLE : View.GONE);
         }
         // If this is a device admin, it can't be uninstall or disabled.
         // We do this here so the text of the button is still set correctly.
