@@ -88,6 +88,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
     // Additional setting
     private static final String LOCK_NUMPAD_RANDOM = "lock_numpad_random";
     private static final String BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE = "block_device_admin_password_change";
+    private static final String LOCKSCREEN_MAXIMIZE_WIDGETS = "lockscreen_maximize_widgets";
 
     private PackageManager mPM;
     private DevicePolicyManager mDPM;
@@ -109,6 +110,7 @@ public class SecuritySettings extends RestrictedSettingsFragment
     private CheckBoxPreference mToggleVerifyApps;
     private CheckBoxPreference mPowerButtonInstantlyLocks;
     private CheckBoxPreference mEnableKeyguardWidgets;
+    private CheckBoxPreference mMaximizeKeyguardWidgets;
 
     private Preference mNotificationAccess;
 
@@ -207,6 +209,13 @@ public class SecuritySettings extends RestrictedSettingsFragment
         if (mLockAfter != null) {
             setupLockAfterPreference();
             updateLockAfterPreferenceSummary();
+        }
+
+        // maximize keyguard widgets
+        mMaximizeKeyguardWidgets = (CheckBoxPreference) root.findPreference(LOCKSCREEN_MAXIMIZE_WIDGETS);
+        if( mMaximizeKeyguardWidgets != null ) {
+            mMaximizeKeyguardWidgets.setChecked(Settings.System.getInt(getContentResolver(),
+                    Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, 0) == 1);
         }
 
         // biometric weak liveliness
@@ -578,6 +587,9 @@ public class SecuritySettings extends RestrictedSettingsFragment
         } else if (BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE.equals(key)){
             Settings.Secure.putInt(getContentResolver(), Settings.Secure.BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE,
                     isToggled(preference) ? 1 : 0 );
+        } else if (preference == mMaximizeKeyguardWidgets) {
+            Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS,
+                    mMaximizeKeyguardWidgets.isChecked() ? 1 : 0);
         } else if (preference == mShowPassword) {
             Settings.System.putInt(getContentResolver(), Settings.System.TEXT_SHOW_PASSWORD,
                     mShowPassword.isChecked() ? 1 : 0);

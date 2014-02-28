@@ -95,4 +95,8 @@
     <!-- QuickSettings Quick Pulldown -->
     <string name="quick_pulldown_title">Quick pulldown</string>
     <string name="quick_pulldown_summary">Show Quick Settings when pulling down notification bar near the right side of the screen</string>
+
+    <!-- Text shown for title of settings checkbox to maximize widgets [CHAR LIMIT=20] -->
+    <string name="maximize_widgets_title">Maximize lockscreen widgets</string>
+
 </resources>
