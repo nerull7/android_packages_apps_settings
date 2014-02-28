@@ -53,12 +53,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_FONT_SIZE = "font_size";
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_SCREEN_SAVER = "screensaver";
+    private static final String QUICK_PULLDOWN = "quick_pulldown";
 
     private static final int DLG_GLOBAL_CHANGE_WARNING = 1;
 
     private CheckBoxPreference mAccelerometer;
     private WarnedListPreference mFontSizePref;
     private CheckBoxPreference mNotificationPulse;
+    private CheckBoxPreference mQuickPulldown;
 
     private final Configuration mCurConfig = new Configuration();
     
@@ -89,6 +91,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             // if the device supports rotation.
             getPreferenceScreen().removePreference(mAccelerometer);
         }
+        mQuickPulldown = (CheckBoxPreference) findPreference(QUICK_PULLDOWN);
+        mQuickPulldown.setChecked(Settings.System.getInt(resolver, Settings.System.QS_QUICK_PULLDOWN, 0) == 1);
 
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null
@@ -287,6 +291,11 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         if (preference == mAccelerometer) {
             RotationPolicy.setRotationLockForAccessibility(
                     getActivity(), !mAccelerometer.isChecked());
+        } else if (preference == mQuickPulldown) {
+            boolean value = mQuickPulldown.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.QS_QUICK_PULLDOWN,
+                    value ? 1 :0);
+            return true;
         } else if (preference == mNotificationPulse) {
             boolean value = mNotificationPulse.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.NOTIFICATION_LIGHT_PULSE,

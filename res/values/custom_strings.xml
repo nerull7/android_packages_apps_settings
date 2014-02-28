@@ -92,5 +92,7 @@
     <!-- Hostname setting -->
     <string name="device_hostname">Device hostname</string>
 
-
+    <!-- QuickSettings Quick Pulldown -->
+    <string name="quick_pulldown_title">Quick pulldown</string>
+    <string name="quick_pulldown_summary">Show Quick Settings when pulling down notification bar near the right side of the screen</string>
 </resources>

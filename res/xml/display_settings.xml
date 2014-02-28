@@ -31,6 +31,12 @@
             android:key="accelerometer"
             android:title="@string/accelerometer_title"/>
 
+        <CheckBoxPreference
+            android:key="quick_pulldown"
+            android:title="@string/quick_pulldown_title"
+            android:summary="@string/quick_pulldown_summary"
+            android:persistent="false" />
+
         <ListPreference
                 android:key="screen_timeout"
                 android:title="@string/screen_timeout"
