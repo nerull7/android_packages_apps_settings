@@ -38,6 +38,7 @@ import android.util.Log;
 
 import com.android.internal.view.RotationPolicy;
 import com.android.settings.DreamSettings;
+import com.android.settings.Utils;
 
 import java.util.ArrayList;
 
@@ -91,8 +92,14 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
             // if the device supports rotation.
             getPreferenceScreen().removePreference(mAccelerometer);
         }
+
         mQuickPulldown = (CheckBoxPreference) findPreference(QUICK_PULLDOWN);
-        mQuickPulldown.setChecked(Settings.System.getInt(resolver, Settings.System.QS_QUICK_PULLDOWN, 0) == 1);
+        if(Utils.isTablet(getActivity()) || Utils.isHybrid(getActivity())) {
+            getPreferenceScreen().removePreference(mQuickPulldown);
+        }
+        else {
+            mQuickPulldown.setChecked(Settings.System.getInt(resolver, Settings.System.QS_QUICK_PULLDOWN, 0) == 1);
+        }
 
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
         if (mScreenSaverPreference != null

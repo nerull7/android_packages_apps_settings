@@ -44,6 +44,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.android.internal.widget.LockPatternUtils;
+import com.android.settings.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -216,6 +217,9 @@ public class SecuritySettings extends RestrictedSettingsFragment
         if( mMaximizeKeyguardWidgets != null ) {
             mMaximizeKeyguardWidgets.setChecked(Settings.System.getInt(getContentResolver(),
                     Settings.System.LOCKSCREEN_MAXIMIZE_WIDGETS, 0) == 1);
+        }
+        if( Utils.isTablet(getActivity()) || Utils.isHybrid(getActivity())) {
+            root.removePreference(mMaximizeKeyguardWidgets);
         }
 
         // biometric weak liveliness

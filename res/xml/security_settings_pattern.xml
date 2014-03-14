@@ -47,8 +47,9 @@
             android:title="@string/security_enable_widgets_title"/>
 
         <CheckBoxPreference
-            android:key="lockscreen_maximize_widgets"
-            android:title="@string/maximize_widgets_title" />
+            android:key="lockscreen_maximize_widgets" 
+            android:title="@string/maximize_widgets_title" 
+            android:persistent="false" />
 
         <PreferenceScreen
             android:fragment="com.android.settings.OwnerInfoSettings"
