@@ -21,6 +21,7 @@ import com.android.internal.telephony.SmsUsageMonitor;
 import com.android.settings.R;
 import com.android.settings.Utils;
 import com.android.settings.applications.ApplicationsState.AppEntry;
+import com.android.settings.SubSettings;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -119,6 +120,7 @@ public class InstalledAppDetails extends Fragment
     private Button mUninstallButton;
     private View mMoreControlButtons;
     private Button mSpecialDisableButton;
+    private Button mAppOpsButton;
     private boolean mMoveInProgress = false;
     private boolean mUpdatedSysApp = false;
     private Button mActivitiesButton;
@@ -351,9 +353,9 @@ public class InstalledAppDetails extends Fragment
                 specialDisable = handleDisableable(mSpecialDisableButton);
                 mSpecialDisableButton.setOnClickListener(this);
             }
-            mMoreControlButtons.setVisibility(specialDisable ? View.VISIBLE : View.GONE);
+            mSpecialDisableButton.setVisibility(specialDisable ? View.VISIBLE : View.INVISIBLE);
         } else {
-            mMoreControlButtons.setVisibility(View.GONE);
+            mSpecialDisableButton.setVisibility(View.INVISIBLE);
             if ((mAppEntry.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
                 enabled = handleDisableable(mUninstallButton);
             } else {
@@ -370,7 +372,7 @@ public class InstalledAppDetails extends Fragment
                 // Froze all the apps
                 mSpecialDisableButton.setText(mAppEntry.info.enabled ? R.string.disable_text : R.string.enable_text);
                 mSpecialDisableButton.setOnClickListener(this);
-                mMoreControlButtons.setVisibility(enabled ? View.VISIBLE : View.GONE);
+                mSpecialDisableButton.setVisibility(enabled ? View.VISIBLE : View.INVISIBLE);
             }
         }
         // If this is a device admin, it can't be uninstall or disabled.
@@ -459,10 +461,13 @@ public class InstalledAppDetails extends Fragment
         
         // Get More Control button panel
         mMoreControlButtons = view.findViewById(R.id.more_control_buttons_panel);
-        mMoreControlButtons.findViewById(R.id.left_button).setVisibility(View.INVISIBLE);
         mSpecialDisableButton = (Button)mMoreControlButtons.findViewById(R.id.right_button);
-        mMoreControlButtons.setVisibility(View.GONE);
         
+        // AppOps button
+        mAppOpsButton = (Button)mMoreControlButtons.findViewById(R.id.left_button);
+        mAppOpsButton.setText(R.string.app_ops_settings);
+        mAppOpsButton.setOnClickListener(InstalledAppDetails.this);
+
         // Initialize clear data and move install location buttons
         View data_buttons_panel = view.findViewById(R.id.data_buttons_panel);
         mClearDataButton = (Button) data_buttons_panel.findViewById(R.id.right_button);
@@ -1414,6 +1419,19 @@ public class InstalledAppDetails extends Fragment
             mMoveInProgress = true;
             refreshButtons();
             mPm.movePackage(mAppEntry.info.packageName, mPackageMoveObserver, moveFlags);
+        } else if (v == mAppOpsButton) {
+            // start new activity to display AppOps for package
+            Bundle args = new Bundle();
+            args.putString(AppOpsDetails.ARG_PACKAGE_NAME, packageName);
+
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setClass(getActivity(), SubSettings.class);
+            intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, AppOpsDetails.class.getName());
+            intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS, args);
+            intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_TITLE, R.string.app_ops_settings);
+            intent.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_SHORT_TITLE, 0);
+            intent.putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
+            startActivity(intent);
         }
     }
 
