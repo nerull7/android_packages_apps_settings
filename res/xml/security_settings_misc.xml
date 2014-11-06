@@ -58,6 +58,11 @@
                 android:summaryOn="@string/install_unknown_applications"
                 android:persistent="false" />
 
+       <Preference 
+                android:key="appops_settings"
+                android:title="@string/appops_settings_title"
+                android:fragment="com.android.settings.applications.AppOpsSummary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:key="credentials_management"
