@@ -52,13 +52,18 @@
                 android:persistent="false"
                 android:fragment="com.android.settings.DeviceAdminSettings"/>
 
+        <SwitchPreference 
+                android:key="block_device_admin_password_change"
+                android:title="@string/block_device_admin_password_change_title"
+                android:summary="@string/block_device_admin_password_change_summary" />
+
         <SwitchPreference android:key="toggle_install_applications"
                 android:title="@string/install_applications"
                 android:summaryOff="@string/install_unknown_applications"
                 android:summaryOn="@string/install_unknown_applications"
                 android:persistent="false" />
 
-       <Preference 
+        <Preference 
                 android:key="appops_settings"
                 android:title="@string/appops_settings_title"
                 android:fragment="com.android.settings.applications.AppOpsSummary" />

@@ -30,4 +30,8 @@
     <!-- Header on first screen of choose encryption password [CHAR LIMIT=30] -->
     <string name="encryptionpassword_choose_your_password_header">Set encryption password</string>
 
+    <!-- Block Device Admins Apps from changing lockscreen -->
+    <string name="block_device_admin_password_change_title">Block Apps from Changing Lockscreen Password</string>
+    <string name="block_device_admin_password_change_summary">Block changes to lockscreen password from enabled Device Administrator Apps (ex. Android Device Manager)</string>
+
 </resources>

@@ -108,6 +108,9 @@ public class SecuritySettings extends SettingsPreferenceFragment
     // Only allow one trust agent on the platform.
     private static final boolean ONLY_ONE_TRUST_AGENT = true;
 
+    // Additional setting
+    private static final String BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE = "block_device_admin_password_change";
+
     private DevicePolicyManager mDPM;
 
     private ChooseLockSettingsHelper mChooseLockSettingsHelper;
@@ -659,6 +662,9 @@ public class SecuritySettings extends SettingsPreferenceFragment
             } else {
                 setNonMarketAppsAllowed(false);
             }
+        } else if (BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE.equals(key)){
+            Settings.Secure.putInt(getContentResolver(), Settings.Secure.BLOCK_DEVICE_ADMIN_PASSWORD_CHANGE,
+                     ((Boolean) value) ? 1 : 0);
         }
         return result;
     }
