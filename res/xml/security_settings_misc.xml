@@ -63,9 +63,10 @@
                 android:summaryOn="@string/install_unknown_applications"
                 android:persistent="false" />
 
-        <Preference 
-                android:key="appops_settings"
-                android:title="@string/appops_settings_title"
+        <Preference android:key="appops_settings"
+                android:title="@string/app_ops_settings"
+                android:summary="@string/app_ops_settings_summary"
+                android:persistent="false"
                 android:fragment="com.android.settings.applications.AppOpsSummary" />
 
     </PreferenceCategory>
