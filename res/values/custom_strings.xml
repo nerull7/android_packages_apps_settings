@@ -19,6 +19,9 @@
     <!-- [CHAR LIMIT=NONE] App ops settings summary, on main settings screen. If clicked, the user is taken to a settings screen for app operations -->
     <string name="app_ops_settings_summary">View or change app permissions</string>
 
+    <!-- Toast message when trying to open system app AppOps -->
+    <string name="appops_sys_app">Cannot change operations for system apps</string>
+
     <!-- Disable installed apps -->
     <string name="app_not_so_special_disable_dlg_title">Disable installed app?</string>
     <string name="app_not_so_special_disable_dlg_text">If you disable app, you will not be able to open it without enabling it back. Your data will not be deleted.</string>
